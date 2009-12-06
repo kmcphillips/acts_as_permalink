@@ -1,0 +1,23 @@
+Acts As Permalink
+===============
+
+Manages permalink field on an ActiveRecord model to be used in place of the id field in Rails.
+
+
+Usage
+=====
+
+class Post < ActiveRecord::Base
+  acts_as_permalink
+end
+
+That's about it. 
+The plugin expects string fields to be used to save the permalink on the model and to use as a source for the permalink. It defaults to use the fields named "title" and "permalink" which can be overridden by options:
+
+:from        =>  :title       # Name of the active record column or function used to generate the permalink
+:to          =>  :permalink   # Name of the column where the permalink will be stored
+:max_length  =>  60           # Maximum number of characters the permalink will be
+
+
+
+Copyright (c) 2009 Kevin McPhillips (kimos), released under the MIT license

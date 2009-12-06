@@ -1,0 +1,1 @@
+# No uninstall hook needed
