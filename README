@@ -1,5 +1,5 @@
 Acts As Permalink
-===============
+=================
 
 Manages permalink field on an ActiveRecord model to be used in place of the id field in Rails.
 
@@ -19,5 +19,11 @@ The plugin expects string fields to be used to save the permalink on the model a
 :max_length  =>  60           # Maximum number of characters the permalink will be
 
 
+About
+=====
 
-Copyright (c) 2009 Kevin McPhillips (kimos), released under the MIT license
+By Kevin McPhillips (kimos) in 2009.
+http://github.com/kimos/acts_as_permalink
+
+Email me if you'd like: kimos-github@gleep.ca
+
