@@ -9,12 +9,12 @@ module Acts #:nodoc:
     module ClassMethods
       def acts_as_permalink(options={})
         # Read and scrub option for the column which will save the permalink    
-        permalink_column_name = options[:to].andand.to_sym || :permalink
+        permalink_column_name = options[:to].try(:to_sym) || :permalink
         write_inheritable_attribute :permalink_column_name, permalink_column_name
         class_inheritable_reader    :permalink_column_name
 
         # Read and scrub the option for the column or function which will generate the permalink 
-        write_inheritable_attribute :permalink_source, (options[:from].andand.to_sym || :title)
+        write_inheritable_attribute :permalink_source, (options[:from].try(:to_sym) || :title)
         class_inheritable_reader    :permalink_source
 
         # Read and validate the maximum length of the permalink
