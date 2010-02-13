@@ -50,11 +50,11 @@ module Acts #:nodoc:
         end
         
         # Attempt to find the object by the permalink
-        if obj.class.send("find_by_#{obj.permalink_column_name}", text)
+        if obj.class.base_class.send("find_by_#{obj.permalink_column_name}", text)
           num = 1
 
           # If we find the object we know there is a collision, so just add a number to the end until there is no collision
-          while obj.class.send("find_by_#{obj.permalink_column_name}", text + num.to_s)
+          while obj.class.base_class.send("find_by_#{obj.permalink_column_name}", text + num.to_s)
             num += 1
           end
 
