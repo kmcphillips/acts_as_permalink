@@ -29,6 +29,12 @@ class User < ActiveRecord::Base
 end
 
 
+History
+=======
+
+Feb 13, 2010  --  Fixed collision problem with single table inheritance models.
+
+
 About
 =====
 
