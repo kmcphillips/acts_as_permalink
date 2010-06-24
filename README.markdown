@@ -6,7 +6,7 @@ Written by Kevin McPhillips (kimos) in 2009.
 
 [http://github.com/kimos/acts_as_permalink](http://github.com/kimos/acts_as_permalink)
 
-[kimos-github@gleep.ca](mailto:kimos-github@gleep.ca)
+[github@kevinmcphillips.ca](mailto:github@kevinmcphillips.ca)
 
 
 ## Usage

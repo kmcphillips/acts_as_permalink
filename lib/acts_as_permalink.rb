@@ -71,12 +71,12 @@ module Acts #:nodoc:
 
       # Override this method so that find searches by permalink and not by id
       def to_param
-        permalink
+        self.send(self.permalink_column_name)
       end
       
       # Generate the permalink and assign it directly via callback
       def update_permalink
-        self.permalink = self.class.generate_permalink_for(self)
+        self.send("#{self.permalink_column_name}=", self.class.generate_permalink_for(self))
       end
     end
   end
