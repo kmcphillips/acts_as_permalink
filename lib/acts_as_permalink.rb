@@ -23,7 +23,11 @@ module Acts #:nodoc:
         write_inheritable_attribute :permalink_length, max_length
         class_inheritable_reader    :permalink_length
 
-        before_validation_on_create :update_permalink
+        if Rails.version >= "3"
+          before_validation :update_permalink, :on => :create
+        else
+          before_validation_on_create :update_permalink
+        end
 
         validates_uniqueness_of permalink_column_name
         attr_readonly permalink_column_name
