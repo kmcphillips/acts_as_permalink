@@ -4,6 +4,8 @@ Manages permalink field on an ActiveRecord model to be used in place of the id f
 
 Written by Kevin McPhillips (kimos) in 2009.
 
+Last updated March 2012.
+
 [http://github.com/kimos/acts_as_permalink](http://github.com/kimos/acts_as_permalink)
 
 [github@kevinmcphillips.ca](mailto:github@kevinmcphillips.ca)
@@ -34,6 +36,8 @@ So, for example you have want to store your permalink in a column called "path_n
 
 
 ## History
+
+*March 19, 2012  --  Updated to work with Rails 3.2
 
 *Feb 13, 2010*  --  Fixed collision problem with single table inheritance models. Removed dependency on andand gem.
 
