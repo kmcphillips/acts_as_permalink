@@ -34,8 +34,9 @@ module Acts #:nodoc:
       
       # Returns the unique permalink string for the passed in object.
       def generate_permalink_for(obj)
+
         # Find the source for the permalink
-        text = obj.send(obj.instance_variable_get('@permalink_source'))
+        text = obj.send(obj.class.instance_variable_get('@permalink_source'))
         
         # If it is blank then generate a random link
         if text.blank?
@@ -46,15 +47,15 @@ module Acts #:nodoc:
           text = text.downcase.strip                  # make the string lowercase and scrub white space on either side
           text = text.gsub(/[^a-z0-9\w]/, "_")        # make any character that is not nupermic or alphabetic into an underscore
           text = text.sub(/_+$/, "").sub(/^_+/, "")   # remove underscores on either end, caused by non-simplified characters
-          text = text[0..obj.instance_variable_get('@permalink_length')]        # trim to length
+          text = text[0..obj.class.instance_variable_get('@permalink_length')]        # trim to length
         end
         
         # Attempt to find the object by the permalink
-        if obj.class.base_class.send("find_by_#{obj.instance_variable_get('@permalink_column_name')}", text)
+        if obj.class.base_class.send("find_by_#{obj.class.instance_variable_get('@permalink_column_name')}", text)
           num = 1
 
           # If we find the object we know there is a collision, so just add a number to the end until there is no collision
-          while obj.class.base_class.send("find_by_#{obj.instance_variable_get('@permalink_column_name')}", text + num.to_s)
+          while obj.class.base_class.send("find_by_#{obj.class.instance_variable_get('@permalink_column_name')}", text + num.to_s)
             num += 1
           end
 
@@ -77,6 +78,7 @@ module Acts #:nodoc:
       # Generate the permalink and assign it directly via callback
       def update_permalink
         self.send("#{self.class.instance_variable_get('@permalink_column_name')}=", self.class.generate_permalink_for(self))
+        true
       end
     end
   end
