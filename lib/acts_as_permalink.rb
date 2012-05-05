@@ -47,7 +47,7 @@ module Acts #:nodoc:
           text = text.downcase.strip                  # make the string lowercase and scrub white space on either side
           text = text.gsub(/[^a-z0-9\w]/, "_")        # make any character that is not nupermic or alphabetic into an underscore
           text = text.sub(/_+$/, "").sub(/^_+/, "")   # remove underscores on either end, caused by non-simplified characters
-          text = text[0..obj.class.instance_variable_get('@permalink_length')]        # trim to length
+          text = text[0...obj.class.instance_variable_get('@permalink_length')]        # trim to length
         end
         
         # Attempt to find the object by the permalink
@@ -83,3 +83,5 @@ module Acts #:nodoc:
     end
   end
 end
+
+ActiveRecord::Base.send(:include, Acts::Permalink)

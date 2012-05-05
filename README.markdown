@@ -13,6 +13,12 @@ Last updated March 2012.
 
 ## Usage
 
+The gem is on RubyGems:
+
+    gem 'acts_as_permalink'
+
+And then just call it in your model:
+
     class Post < ActiveRecord::Base
       acts_as_permalink
     end
@@ -37,7 +43,9 @@ So, for example you have want to store your permalink in a column called "path_n
 
 ## History
 
-*March 19, 2012  --  Updated to work with Rails 3.2
+* May 3, 2012 -- 0.3.1 -- Finally got it gemified.
 
-*Feb 13, 2010*  --  Fixed collision problem with single table inheritance models. Removed dependency on andand gem.
+* March 19, 2012  --  Updated to work with Rails 3.2
+
+* Feb 13, 2010*  --  Fixed collision problem with single table inheritance models. Removed dependency on andand gem.
 
