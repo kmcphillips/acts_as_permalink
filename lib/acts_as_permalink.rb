@@ -9,15 +9,15 @@ module Acts #:nodoc:
     module ClassMethods
       def acts_as_permalink(options={})
         # Read and scrub option for the column which will save the permalink    
-        @permalink_column_name = options[:to].try(:to_sym) || :permalink
+        self.base_class.instance_variable_set('@permalink_column_name', options[:to].try(:to_sym) || :permalink)
 
         # Read and scrub the option for the column or function which will generate the permalink 
-        @permalink_source = (options[:from].try(:to_sym) || :title)
+        self.base_class.instance_variable_set('@permalink_source', (options[:from].try(:to_sym) || :title))
 
         # Read and validate the maximum length of the permalink
         max_length = options[:max_length].to_i rescue 0
         max_length = 60 unless max_length && max_length > 0
-        @permalink_length = max_length
+        self.base_class.instance_variable_set('@permalink_length', max_length)
 
         if Rails.version >= "3"
           before_validation :update_permalink, :on => :create
@@ -36,26 +36,26 @@ module Acts #:nodoc:
       def generate_permalink_for(obj)
 
         # Find the source for the permalink
-        text = obj.send(obj.class.instance_variable_get('@permalink_source'))
+        text = obj.send(obj.class.base_class.instance_variable_get('@permalink_source'))
         
         # If it is blank then generate a random link
         if text.blank?
-          text = obj.class.to_s.downcase + rand(10000).to_s
+          text = obj.class.base_class.to_s.downcase + rand(10000).to_s
 
         # If it is not blank, scrub
         else
           text = text.downcase.strip                  # make the string lowercase and scrub white space on either side
           text = text.gsub(/[^a-z0-9\w]/, "_")        # make any character that is not nupermic or alphabetic into an underscore
           text = text.sub(/_+$/, "").sub(/^_+/, "")   # remove underscores on either end, caused by non-simplified characters
-          text = text[0...obj.class.instance_variable_get('@permalink_length')]        # trim to length
+          text = text[0...obj.class.base_class.instance_variable_get('@permalink_length')]        # trim to length
         end
         
         # Attempt to find the object by the permalink
-        if obj.class.base_class.send("find_by_#{obj.class.instance_variable_get('@permalink_column_name')}", text)
+        if obj.class.base_class.send("find_by_#{obj.class.base_class.instance_variable_get('@permalink_column_name')}", text)
           num = 1
 
           # If we find the object we know there is a collision, so just add a number to the end until there is no collision
-          while obj.class.base_class.send("find_by_#{obj.class.instance_variable_get('@permalink_column_name')}", text + num.to_s)
+          while obj.class.base_class.send("find_by_#{obj.class.base_class.instance_variable_get('@permalink_column_name')}", text + num.to_s)
             num += 1
           end
 
@@ -72,12 +72,12 @@ module Acts #:nodoc:
 
       # Override this method so that find searches by permalink and not by id
       def to_param
-        self.send(self.class.instance_variable_get('@permalink_column_name'))
+        self.send(self.class.base_class.instance_variable_get('@permalink_column_name'))
       end
       
       # Generate the permalink and assign it directly via callback
       def update_permalink
-        self.send("#{self.class.instance_variable_get('@permalink_column_name')}=", self.class.generate_permalink_for(self))
+        self.send("#{self.class.base_class.instance_variable_get('@permalink_column_name')}=", self.class.base_class.generate_permalink_for(self))
         true
       end
     end
