@@ -28,6 +28,23 @@ describe Acts::Permalink do
 
   end
 
+  describe "single table inheritance" do
+    
+    class Thing < ActiveRecord::Base
+      attr_accessible :title, :permalink
+      acts_as_permalink
+    end
+
+    class SpecificThing < Thing
+    end
+
+    it "should create the permalink for the subclass" do
+      t = SpecificThing.create! :title => "the title"
+      t.permalink.should == "the_title"
+    end
+
+  end
+
   describe "custom attributes" do
     class OtherPost < ActiveRecord::Base
       self.table_name = "posts"
