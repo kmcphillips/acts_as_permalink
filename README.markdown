@@ -41,11 +41,18 @@ So, for example you have want to store your permalink in a column called "path_n
     end
 
 
+## Tests
+
+Just run:
+  
+    rspec
+
+
 ## History
 
 * May 3, 2012 -- 0.3.1 -- Finally got it gemified.
 
 * March 19, 2012  --  Updated to work with Rails 3.2
 
-* Feb 13, 2010*  --  Fixed collision problem with single table inheritance models. Removed dependency on andand gem.
+* Feb 13, 2010  --  Fixed collision problem with single table inheritance models. Removed dependency on andand gem.
 
