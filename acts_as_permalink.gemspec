@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Acts::Permalink::VERSION
   s.authors     = ["Kevin McPhillips"]
   s.email       = ["github@kevinmcphillips.ca"]
-  s.homepage    = "http://github.com/kimos/acts_as_permalink"
+  s.homepage    = "http://github.com/kmcphillips/acts_as_permalink"
   s.summary     = "Automatically manage permalink fields for ActiveRecord models in Rails."
   s.description = "Manages permalink columns in active record models. Strips special characters and spaces, creates before validation, assures uniqueness. That kind of thing."
 

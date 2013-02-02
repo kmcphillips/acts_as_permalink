@@ -2,11 +2,11 @@
 
 Manages permalink field on an ActiveRecord model to be used in place of the id field in Rails.
 
-Written by Kevin McPhillips (kimos) in 2009.
+Written by Kevin McPhillips (kmcphillips) in 2009.
 
 Last updated March 2012.
 
-[http://github.com/kimos/acts_as_permalink](http://github.com/kimos/acts_as_permalink)
+[http://github.com/kmcphillips/acts_as_permalink](http://github.com/kmcphillips/acts_as_permalink)
 
 [github@kevinmcphillips.ca](mailto:github@kevinmcphillips.ca)
 
