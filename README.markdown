@@ -50,9 +50,11 @@ Just run:
 
 ## History
 
-* May 3, 2012 -- 0.3.1 -- Finally got it gemified.
+* 0.4.0  --  Rails 4 support.
 
-* March 19, 2012  --  Updated to work with Rails 3.2
+* 0.3.2  --  Fixed regression in STI support.
 
-* Feb 13, 2010  --  Fixed collision problem with single table inheritance models. Removed dependency on andand gem.
+* 0.3.1  --  Rails 3.2 support.
+
+* 0.3.0  --  Fixed collision problem with single table inheritance models. Removed dependency on andand gem.
 
