@@ -1,54 +1,73 @@
-# Acts As Permalink
+# [Acts as Permalink](https://github.com/kmcphillips/acts_as_permalink)
+
+[![Build Status](https://travis-ci.org/kmcphillips/acts_as_permalink.svg?branch=master)](https://travis-ci.org/kmcphillips/acts_as_permalink)
 
 Manages permalink field on an ActiveRecord model to be used in place of the id field in Rails.
 
-Written by Kevin McPhillips (kmcphillips) in 2009.
+Written by [Kevin McPhillips](https://github.com/kmcphillips) ([github@kevinmcphillips.ca](mailto:github@kevinmcphillips.ca))
 
-Last updated March 2012.
 
-[http://github.com/kmcphillips/acts_as_permalink](http://github.com/kmcphillips/acts_as_permalink)
+## Installation
 
-[github@kevinmcphillips.ca](mailto:github@kevinmcphillips.ca)
+Using bundler, add to the Gemfile:
 
+```ruby
+gem 'acts_as_permalink'
+```
+
+Or stand alone:
+
+```
+$ gem install acts_as_permalink
+```
 
 ## Usage
 
-The gem is on RubyGems:
-
-    gem 'acts_as_permalink'
+This gem works with ActiveRecord, and by convention looks for a `title` method and a `permalink` string field on the model:
 
 And then just call it in your model:
 
-    class Post < ActiveRecord::Base
-      acts_as_permalink
-    end
+```ruby
+class Post < ActiveRecord::Base
+  acts_as_permalink
+end
+```
 
-That's about it. 
-The plugin expects string fields to be used to save the permalink on the model and to use as a source for the permalink. It defaults to use the fields named "title" and "permalink" which can be overridden by options:
+You can then use your link helpers normally:
 
-    :from        =>  :title       # Name of the active record column or function used to generate the permalink
-    :to          =>  :permalink   # Name of the column where the permalink will be stored
-    :max_length  =>  60           # Maximum number of characters the permalink will be
+```ruby
+post_path(@post) # "/post/the_name_of_post_here"
+```
 
-So, for example you have want to store your permalink in a column called "path_name" and you want to generate your permalink using first and last name, and you want to restrict it to 40 characters, your model would look like:
+The `title` and `permalink` fields can be overridden with the following options:
 
-    class User < ActiveRecord::Base
-      acts_as_permalink :from => :full_name, :to => :path, :max_length => 40
+    from:        :title       # Name of the active record column or function used to generate the permalink
+    to:          :permalink   # Name of the column where the permalink will be stored
+    max_length:  60           # Maximum number of characters the permalink will be
 
-      def full_name
-        first_name + last_name
-      end
-    end
+So, for example you have want to store your permalink in a column called `path_name` and you want to generate your permalink using first and last name, and you want to restrict it to 40 characters, your model would look like:
+
+```ruby
+class User < ActiveRecord::Base
+  acts_as_permalink from: :full_name, to: :path, max_length: 40
+
+  def full_name
+    [first_name, last_name].join(" ")
+  end
+end
+```
 
 
 ## Tests
 
-Just run:
-  
-    rspec
+```
+$ bundle exec rspec
+```
 
 
-## History
+## Changelog
+
+* 0.4.1  --  Documentation improvements.
 
 * 0.4.0  --  Rails 4 support.
 
@@ -58,3 +77,11 @@ Just run:
 
 * 0.3.0  --  Fixed collision problem with single table inheritance models. Removed dependency on andand gem.
 
+
+## Contributing
+
+1. Fork it ( https://github.com/kmcphillips/acts_as_permalink/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request
