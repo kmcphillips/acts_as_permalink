@@ -17,18 +17,44 @@ describe Acts::Permalink do
     it "avoids a collision by adding a number" do
       Post.create! title: "collision"
       record = Post.create!(title: "collision")
-      expect(record.permalink).to eq("collision1")
+      expect(record.permalink).to eq("collision-1")
     end
 
     it "should shorten the value to the default max_length" do
-      record = Post.create!(title: ("a" * 250))
+      record = Post.create!(title: ("a" * 300))
       expect(record.permalink).to eq("a" * 60)
     end
 
     it "adheres to the max_length option even if adding a number for a collision" do
-      skip
+      Post.create!(title: ("b" * 300))
+      record = Post.create!(title: ("b" * 300))
+      expect(record.permalink).to eq("#{ "b" * 58 }-1")
     end
 
+  end
+
+  describe "column with max_length property" do
+    class LongThing < ActiveRecord::Base
+      acts_as_permalink max_length: 100
+    end
+
+    it "adheres to the max_length option even if adding a number for a collision" do
+      long_title = "a" * 300
+      expect(LongThing.create!(title: long_title).permalink).to eq("a" * 100)
+      expect(LongThing.create!(title: long_title).permalink).to eq("#{ "a" * 98 }-1")
+      expect(LongThing.create!(title: long_title).permalink).to eq("#{ "a" * 98 }-2")
+      7.times{ LongThing.create!(title: long_title) }
+      expect(LongThing.create!(title: long_title).permalink).to eq("#{ "a" * 97 }-10")
+    end
+
+    it "does not truncate if the title is short" do
+      title = "bbb"
+      expect(LongThing.create!(title: title).permalink).to eq(title)
+      expect(LongThing.create!(title: title).permalink).to eq("bbb-1")
+      expect(LongThing.create!(title: title).permalink).to eq("bbb-2")
+      7.times{ LongThing.create!(title: title) }
+      expect(LongThing.create!(title: title).permalink).to eq("bbb-10")
+    end
   end
 
   describe "single table inheritance" do
