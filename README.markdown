@@ -67,6 +67,11 @@ $ bundle exec rspec
 
 ## Changelog
 
+* 0.5.0  --  Fix bugs in `max_length` property which would sometimes allow the permalink to be longer than the value
+             Use `where().first` over `send("find_by_#{ column }")`
+
+* 0.4.2  --  Update rspec to new expect() syntax
+
 * 0.4.1  --  Documentation improvements.
 
 * 0.4.0  --  Rails 4 support.
