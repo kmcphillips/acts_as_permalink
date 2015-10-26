@@ -36,6 +36,11 @@ describe Acts::Permalink do
       expect(record.permalink).to eq("#{ "b" * 58 }-1")
     end
 
+    it "makes a random permalink if the source is blank" do
+      record = Post.create!(title: "")
+      expect(record.permalink).to_not be_blank
+      expect(record.permalink).to match(/^post-\d+$/)
+    end
   end
 
   describe "column with some custom properties" do
@@ -89,7 +94,7 @@ describe Acts::Permalink do
     end
 
     it "works for custom attributes" do
-      record = OtherPost.new other_title: "Other post"
+      record = OtherPost.new(other_title: "Other post")
       expect(record.other_permalink).to be_nil
       record.save!
       expect(record.permalink).to be_nil
