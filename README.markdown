@@ -44,6 +44,7 @@ The `title` and `permalink` fields can be overridden with the following options:
     from:        :title       # Name of the active record column or function used to generate the permalink
     to:          :permalink   # Name of the column where the permalink will be stored
     max_length:  60           # Maximum number of characters the permalink will be
+    underscore:  false        # Prefer using the `_` character as a replacement over the default `-`
 
 So, for example you have want to store your permalink in a column called `path_name` and you want to generate your permalink using first and last name, and you want to restrict it to 40 characters, your model would look like:
 
@@ -66,6 +67,8 @@ $ bundle exec rspec
 
 
 ## Changelog
+
+* 0.6.0  --  Switch default replacement character to a dash, but allow the `underscore: true` property to go back to the old format
 
 * 0.5.0  --  Fix bugs in `max_length` property which would sometimes allow the permalink to be longer than the value
              Use `where().first` over `send("find_by_#{ column }")`
