@@ -11,7 +11,7 @@ module Acts
         @separator = @config[:underscore] ? "_" : "-"
 
         @max_length = @config[:max_length].to_i rescue 0
-        @max_length = 60 unless @max_length && @max_length > 0
+        @max_length = 60 unless @max_length > 0
       end
     end
   end
