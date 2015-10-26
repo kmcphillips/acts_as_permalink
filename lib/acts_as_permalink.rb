@@ -14,6 +14,9 @@ module Acts #:nodoc:
         # Read and scrub the option for the column or function which will generate the permalink
         self.base_class.instance_variable_set('@permalink_source', (options[:from].try(:to_sym) || :title))
 
+        # Set the underscore character
+        self.base_class.instance_variable_set('@permalink_underscore', options[:underscore])
+
         # Read and validate the maximum length of the permalink
         max_length = options[:max_length].to_i rescue 0
         max_length = 60 unless max_length && max_length > 0
@@ -37,6 +40,7 @@ module Acts #:nodoc:
         column_name = obj.class.base_class.instance_variable_get('@permalink_column_name')
         text = obj.send(obj.class.base_class.instance_variable_get('@permalink_source'))
         max_length = obj.class.base_class.instance_variable_get('@permalink_length')
+        separator = obj.class.base_class.instance_variable_get('@permalink_underscore') ? "_" : "-"
 
         # If it is blank then generate a random link
         if text.blank?
@@ -45,9 +49,11 @@ module Acts #:nodoc:
         # If it is not blank, scrub
         else
           text = text.downcase.strip                  # make the string lowercase and scrub white space on either side
-          text = text.gsub(/[^a-z0-9\w]/, "_")        # make any character that is not nupermic or alphabetic into an underscore
-          text = text.sub(/_+$/, "").sub(/^_+/, "")   # remove underscores on either end, caused by non-simplified characters
+          text = text.gsub(/[^a-z0-9\w]/, separator)  # make any character that is not nupermic or alphabetic into a special character
+          text = text.squeeze(separator)              # removes any consecutive duplicates of the special character
           text = text[0...max_length]                 # trim to length
+          text = text.sub(Regexp.new("^#{ separator }+"), "")  # remove leading special characters
+          text = text.sub(Regexp.new("#{ separator }+$"), "")  # remove trailing special characters
         end
 
         # Attempt to find the object by the permalink, and if so there is a collision and we need to de-collision it
@@ -55,7 +61,7 @@ module Acts #:nodoc:
           candidate_text = nil
 
           (1..999999).each do |num|
-            suffix = "-#{ num }"
+            suffix = "#{ separator }#{ num }"
             candidate_text = [text[0...(max_length - suffix.length)], suffix].join("")
             break unless obj.class.base_class.where(column_name => candidate_text).first
           end
