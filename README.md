@@ -21,6 +21,12 @@ Or stand alone:
 $ gem install acts_as_permalink
 ```
 
+## Requirements
+
+* Ruby 2.0 or higher
+* Rails 4.0 or higher
+
+
 ## Usage
 
 This gem works with ActiveRecord, and by convention looks for a `title` method and a `permalink` string field on the model:
@@ -67,6 +73,8 @@ $ bundle exec rspec
 
 
 ## Changelog
+
+* 1.0.0  --  Internal refactor. Require Rails 4.0 or above and Ruby 2.0 or above. Full release, only took 6 years!
 
 * 0.6.0  --  Switch default replacement character to a dash, but allow the `underscore: true` property to go back to the old format
 
