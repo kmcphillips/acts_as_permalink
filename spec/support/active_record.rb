@@ -24,3 +24,8 @@ ActiveRecord::Base.connection.create_table(:long_things) do |t|
   t.string :permalink
   t.string :type
 end
+
+ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS 'normal_things'")
+ActiveRecord::Base.connection.create_table(:normal_things) do |t|
+  t.string :title
+end

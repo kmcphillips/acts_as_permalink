@@ -102,4 +102,15 @@ describe Acts::Permalink do
     end
   end
 
+  describe "regular models" do
+    class NormalThing < ActiveRecord::Base
+    end
+
+    it "does not affect other ActiveRecord models" do
+      thing = NormalThing.create!(title: "the title")
+      expect(thing.to_param).to eq(thing.id.to_s)
+      expect(thing).to_not respond_to(:build_permalink)
+    end
+  end
+
 end

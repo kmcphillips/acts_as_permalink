@@ -13,10 +13,12 @@ module Acts
         before_validation :update_permalink, on: :create
         validates_uniqueness_of self.acts_as_permalink_config.to
         attr_readonly self.acts_as_permalink_config.to
+
+        include Acts::Permalink::InstanceMethods
       end
     end
 
-    included do
+    module InstanceMethods
       def to_param
         self.public_send(self.class.base_class.acts_as_permalink_config.to)
       end
