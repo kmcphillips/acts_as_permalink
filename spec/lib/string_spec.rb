@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 describe String do
@@ -13,6 +14,11 @@ describe String do
 
     it "allows defining a max length" do
       expect("_-_-_-123456_-_-_-_".to_permalink(max_length: 3)).to eq("123")
+    end
+
+    it "uses transliteration to convert weirder characters to simple a-z" do
+      expect("ümlaUT".to_permalink).to eq("umlaut")
+      expect("garçon".to_permalink).to eq("garcon")
     end
   end
 end

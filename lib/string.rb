@@ -2,6 +2,7 @@ class String
   def to_permalink(max_length: nil, separator: "-")
     text = self.dup
 
+    text = ActiveSupport::Inflector.transliterate(text)  # convert to simplified characters
     text = text.downcase.strip                           # make the string lowercase and scrub white space on either side
     text = text.gsub(/[^a-z0-9]/, separator)             # make any character that is not nupermic or alphabetic into a special character
     text = text.squeeze(separator)                       # removes any consecutive duplicates of the special character
