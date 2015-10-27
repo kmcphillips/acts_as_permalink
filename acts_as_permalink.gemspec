@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "Automatically manage permalink fields for ActiveRecord models in Rails."
   s.description = "Manages permalink columns in active record models. Strips special characters and spaces, creates before validation, assures uniqueness. That kind of thing."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.markdown"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", ">= 4.0"
 
