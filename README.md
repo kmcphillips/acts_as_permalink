@@ -74,6 +74,10 @@ $ bundle exec rspec
 
 ## Changelog
 
+* 1.0.2  --  Use `ActiveSupport::Inflector.transliterate` to convert accented letters to simple ASCII letters.
+
+* 1.0.1  --  Fixed a bug where instance methods were being included globally, rather than on calling the class macro.
+
 * 1.0.0  --  Internal refactor. Require Rails 4.0 or above and Ruby 2.0 or above. Full release, only took 6 years!
 
 * 0.6.0  --  Switch default replacement character to a dash, but allow the `underscore: true` property to go back to the old format
