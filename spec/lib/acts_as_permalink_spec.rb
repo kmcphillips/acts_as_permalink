@@ -111,4 +111,33 @@ describe Acts::Permalink do
     end
   end
 
+  describe "scope and validation" do
+    class Event < ActiveRecord::Base
+      acts_as_permalink
+      validates :description, :title, presence: true
+    end
+
+    it "resets the permalink on each attempt to save when validation fails" do
+      event = Event.new(title: "title a")
+      expect(event.save).to be_falsey
+      expect(event.permalink).to eq("title-a")
+
+      event.title = "title b"
+      expect(event.save).to be_falsey
+      expect(event.permalink).to eq("title-b")
+
+      event.title = "title c"
+      event.description = "not blank"
+      expect(event.save).to be_truthy
+      expect(event.permalink).to eq("title-c")
+
+      event.title = "title d"
+      expect(event.save).to be_truthy
+      expect(event.permalink).to eq("title-c")
+      expect(event.reload.permalink).to eq("title-c")
+    end
+
+
+  end
+
 end
