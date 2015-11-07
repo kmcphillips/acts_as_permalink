@@ -74,6 +74,8 @@ $ bundle exec rspec
 
 ## Changelog
 
+* 1.0.3  --  Update tests to use DatabaseCleaner, and bump some dependency versions.
+
 * 1.0.2  --  Use `ActiveSupport::Inflector.transliterate` to convert accented letters to simple ASCII letters.
 
 * 1.0.1  --  Fixed a bug where instance methods were being included globally, rather than on calling the class macro.
