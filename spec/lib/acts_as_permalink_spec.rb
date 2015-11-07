@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe Acts::Permalink do
   describe "default attributes" do
-
     class Post < ActiveRecord::Base
       acts_as_permalink
     end
@@ -72,7 +71,6 @@ describe Acts::Permalink do
   end
 
   describe "single table inheritance" do
-
     class Thing < ActiveRecord::Base
       acts_as_permalink
     end
