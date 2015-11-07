@@ -1,5 +1,7 @@
 require "pry"
 require "rails/all"
+require "fileutils"
+require "database_cleaner"
 require "acts_as_permalink"
 
 Dir[File.expand_path("support/**/*.rb", File.dirname(__FILE__))].each { |f| require f }
