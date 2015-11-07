@@ -8,6 +8,7 @@ describe Acts::Permalink::Config do
     expect(config.from).to eq(:title)
     expect(config.separator).to eq("-")
     expect(config.max_length).to eq(60)
+    expect(config.scope).to be_nil
   end
 
   it "allows the underscore property" do
@@ -33,5 +34,10 @@ describe Acts::Permalink::Config do
     expect(Acts::Permalink::Config.new(max_length: "asdf").max_length).to eq(60)
     expect(Acts::Permalink::Config.new(max_length: 666).max_length).to eq(666)
     expect(Acts::Permalink::Config.new(max_length: "666").max_length).to eq(666)
+  end
+
+  it "does presence on the scope" do
+    expect(Acts::Permalink::Config.new(scope: 1).scope).to eq(1)
+    expect(Acts::Permalink::Config.new(scope: "").scope).to be_nil
   end
 end

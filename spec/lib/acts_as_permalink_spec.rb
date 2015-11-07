@@ -113,7 +113,7 @@ describe Acts::Permalink do
 
   describe "scope and validation" do
     class Event < ActiveRecord::Base
-      acts_as_permalink
+      acts_as_permalink scope: :owner_id
       validates :description, :title, presence: true
     end
 
@@ -137,7 +137,19 @@ describe Acts::Permalink do
       expect(event.reload.permalink).to eq("title-c")
     end
 
+    it "scopes the uniqueness of the permalink" do
+      expect(Event.create!(description: "a", title: "title", owner_id: 1).permalink).to eq("title")
+      expect(Event.create!(description: "a", title: "title", owner_id: 1).permalink).to eq("title-1")
+      expect(Event.create!(description: "a", title: "title", owner_id: 1).permalink).to eq("title-2")
 
+      expect(Event.create!(description: "a", title: "title", owner_id: 2).permalink).to eq("title")
+      expect(Event.create!(description: "a", title: "title", owner_id: 2).permalink).to eq("title-1")
+
+      expect(Event.create!(description: "a", title: "title", owner_id: nil).permalink).to eq("title")
+      expect(Event.create!(description: "a", title: "title", owner_id: nil).permalink).to eq("title-1")
+
+      expect(Event.create!(description: "a", title: "title", owner_id: 1).permalink).to eq("title-3")
+    end
   end
 
 end
