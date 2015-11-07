@@ -1,5 +1,5 @@
 database_file = "#{ File.expand_path(File.join(File.dirname(__FILE__), '..')) }/db/test.sqlite3"
-FileUtils.rm(database_file)
+FileUtils.rm(database_file) if File.exists?(database_file)
 
 ActiveRecord::Base.establish_connection(
   adapter: "sqlite3",
