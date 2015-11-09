@@ -30,3 +30,10 @@ end
 connection.create_table(:normal_things) do |t|
   t.string :title
 end
+
+connection.create_table(:events) do |t|
+  t.string :title
+  t.string :permalink
+  t.string :description
+  t.integer :owner_id
+end

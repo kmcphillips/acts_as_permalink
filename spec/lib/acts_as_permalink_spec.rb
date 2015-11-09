@@ -111,4 +111,45 @@ describe Acts::Permalink do
     end
   end
 
+  describe "scope and validation" do
+    class Event < ActiveRecord::Base
+      acts_as_permalink scope: :owner_id
+      validates :description, :title, presence: true
+    end
+
+    it "resets the permalink on each attempt to save when validation fails" do
+      event = Event.new(title: "title a")
+      expect(event.save).to be_falsey
+      expect(event.permalink).to eq("title-a")
+
+      event.title = "title b"
+      expect(event.save).to be_falsey
+      expect(event.permalink).to eq("title-b")
+
+      event.title = "title c"
+      event.description = "not blank"
+      expect(event.save).to be_truthy
+      expect(event.permalink).to eq("title-c")
+
+      event.title = "title d"
+      expect(event.save).to be_truthy
+      expect(event.permalink).to eq("title-c")
+      expect(event.reload.permalink).to eq("title-c")
+    end
+
+    it "scopes the uniqueness of the permalink" do
+      expect(Event.create!(description: "a", title: "title", owner_id: 1).permalink).to eq("title")
+      expect(Event.create!(description: "a", title: "title", owner_id: 1).permalink).to eq("title-1")
+      expect(Event.create!(description: "a", title: "title", owner_id: 1).permalink).to eq("title-2")
+
+      expect(Event.create!(description: "a", title: "title", owner_id: 2).permalink).to eq("title")
+      expect(Event.create!(description: "a", title: "title", owner_id: 2).permalink).to eq("title-1")
+
+      expect(Event.create!(description: "a", title: "title", owner_id: nil).permalink).to eq("title")
+      expect(Event.create!(description: "a", title: "title", owner_id: nil).permalink).to eq("title-1")
+
+      expect(Event.create!(description: "a", title: "title", owner_id: 1).permalink).to eq("title-3")
+    end
+  end
+
 end

@@ -51,12 +51,15 @@ The `title` and `permalink` fields can be overridden with the following options:
     to:          :permalink   # Name of the column where the permalink will be stored
     max_length:  60           # Maximum number of characters the permalink will be
     underscore:  false        # Prefer using the `_` character as a replacement over the default `-`
+    scope:       nil          # Make the permalink unique scoped to a particular attribute
 
-So, for example you have want to store your permalink in a column called `path_name` and you want to generate your permalink using first and last name, and you want to restrict it to 40 characters, your model would look like:
+So, for example you have want to store your permalink in a column called `path_name` and you want to generate your permalink using first and last name, and you want to restrict it to 40 characters, and scope the permalink by organization, your model would look like:
 
 ```ruby
 class User < ActiveRecord::Base
-  acts_as_permalink from: :full_name, to: :path, max_length: 40
+  acts_as_permalink from: :full_name, to: :path, max_length: 40, scope: :organization_id
+
+  belongs_to :organization
 
   def full_name
     [first_name, last_name].join(" ")
@@ -73,6 +76,8 @@ $ bundle exec rspec
 
 
 ## Changelog
+
+* 1.1.0  --  Allow the option to `scope: :column_id` for uniquness.
 
 * 1.0.3  --  Update tests to use DatabaseCleaner, and bump some dependency versions.
 
