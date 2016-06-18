@@ -47,11 +47,12 @@ post_path(@post) # "/post/the_name_of_post_here"
 
 The `title` and `permalink` fields can be overridden with the following options:
 
-    from:        :title       # Name of the active record column or function used to generate the permalink
-    to:          :permalink   # Name of the column where the permalink will be stored
-    max_length:  60           # Maximum number of characters the permalink will be
-    underscore:  false        # Prefer using the `_` character as a replacement over the default `-`
-    scope:       nil          # Make the permalink unique scoped to a particular attribute
+    from:          :title       # Name of the active record column or function used to generate the permalink
+    to:            :permalink   # Name of the column where the permalink will be stored
+    max_length:    60           # Maximum number of characters the permalink will be
+    underscore:    false        # Prefer using the `_` character as a replacement over the default `-`
+    scope:         nil          # Make the permalink unique scoped to a particular attribute
+    allow_update:  false        # Allow the permalink column to be updated
 
 So, for example you have want to store your permalink in a column called `path_name` and you want to generate your permalink using first and last name, and you want to restrict it to 40 characters, and scope the permalink by organization, your model would look like:
 
@@ -76,6 +77,8 @@ $ bundle exec rspec
 
 
 ## Changelog
+
+* 1.2.0  --  Add the `allow_update` flag. (by @garethson)
 
 * 1.1.0  --  Allow the option to `scope: :column_id` for uniquness.
 
