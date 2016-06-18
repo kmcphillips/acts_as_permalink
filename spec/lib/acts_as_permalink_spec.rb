@@ -40,11 +40,17 @@ describe Acts::Permalink do
       expect(record.permalink).to_not be_blank
       expect(record.permalink).to match(/^post-\d+$/)
     end
+
+    it "does not allow updating" do
+      record = Post.create!(title: "Test")
+      record.update!(title: "Test2")
+      expect(record.permalink).to eq("test")
+    end
   end
 
   describe "column with some custom properties" do
     class LongThing < ActiveRecord::Base
-      acts_as_permalink max_length: 100, underscore: true
+      acts_as_permalink max_length: 100, underscore: true, allow_update: true
     end
 
     it "adheres to the max_length option even if adding a number for a collision" do
@@ -68,6 +74,13 @@ describe Acts::Permalink do
     it "replaces with an underscore if asked to do so" do
       expect(LongThing.create!(title: "it's an underscore!").permalink).to eq("it_s_an_underscore")
     end
+
+    it "allows updating" do
+      record = LongThing.create!(title: "Test")
+      record.update_attributes(permalink: "live")
+      expect(record.reload.permalink).to eq("live")
+    end
+
   end
 
   describe "single table inheritance" do

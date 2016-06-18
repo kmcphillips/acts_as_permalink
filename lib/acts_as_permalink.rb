@@ -11,7 +11,10 @@ module Acts
         self.acts_as_permalink_config = Acts::Permalink::Config.new(options)
 
         before_validation :update_permalink, on: :create
-        attr_readonly self.acts_as_permalink_config.to
+
+        unless self.acts_as_permalink_config.allow_update
+          attr_readonly self.acts_as_permalink_config.to
+        end
 
         if self.acts_as_permalink_config.scope
           validates self.acts_as_permalink_config.to, uniqueness: {scope: self.acts_as_permalink_config.scope}

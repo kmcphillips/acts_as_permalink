@@ -9,10 +9,15 @@ describe Acts::Permalink::Config do
     expect(config.separator).to eq("-")
     expect(config.max_length).to eq(60)
     expect(config.scope).to be_nil
+    expect(config.allow_update).to be_falsy
   end
 
   it "allows the underscore property" do
     expect(Acts::Permalink::Config.new(underscore: true).separator).to eq("_")
+  end
+
+  it "allows the allow_update property" do
+    expect(Acts::Permalink::Config.new(allow_update: true).separator).to be_truthy
   end
 
   it "allows indifferent access" do
