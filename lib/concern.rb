@@ -39,7 +39,7 @@ module Acts
 
         text = self.public_send(config.from)
         text = [self.class.base_class.to_s, rand(10000)].join(config.separator) if text.blank?
-        text = text.to_permalink(separator: config.separator, max_length: config.max_length)
+        text = Acts::Permalink::Conversion.convert(text, separator: config.separator, max_length: config.max_length)
 
         # scope it if one is present
         conditions = {}
