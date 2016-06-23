@@ -4,7 +4,7 @@
 
 Manages permalink field on an ActiveRecord model to be used in place of the id field in Rails.
 
-Written by [Kevin McPhillips](https://github.com/kmcphillips) ([github@kevinmcphillips.ca](mailto:github@kevinmcphillips.ca))
+[Kevin McPhillips](https://github.com/kmcphillips) ([github@kevinmcphillips.ca](mailto:github@kevinmcphillips.ca))
 
 
 ## Installation
@@ -29,7 +29,7 @@ $ gem install acts_as_permalink
 
 ## Usage
 
-This gem works with ActiveRecord, and by convention looks for a `title` method and a `permalink` string field on the model:
+This gem works with `ActiveRecord`, and by convention looks for a `title` method and a `permalink` string field on the model:
 
 And then just call it in your model:
 
@@ -68,6 +68,20 @@ class User < ActiveRecord::Base
 end
 ```
 
+Permalinks can be generated using `String#to_permalink` like so:
+
+```ruby
+"Hello, world!".to_permalink
+> "hello_world"
+```
+
+And the patch to string can be avoided by doing a `require: "base"` in the `Gemfile` of the application. Conversion is always available through:
+
+```ruby
+Acts::Permalink::Conversion.convert("Hello, world!")
+> "hello_world"
+```
+
 
 ## Tests
 
@@ -77,6 +91,8 @@ $ bundle exec rspec
 
 
 ## Changelog
+
+* 1.2.1  --  Separate out `String#to_permalink` patch. Can `require: 'base'`.
 
 * 1.2.0  --  Add the `allow_update` flag. (by @garethson)
 
