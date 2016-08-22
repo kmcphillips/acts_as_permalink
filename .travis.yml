@@ -1,6 +1,14 @@
 language: ruby
 sudo: false
+script: bundle exec rspec
 rvm:
   - "2.0.0"
-  - "2.2.1"
-script: bundle exec rspec
+  - "2.2.2"
+  - "2.3.1"
+gemfile:
+  - Gemfile
+  - gemfiles/rails-4.2.gemfile
+matrix:
+  exclude:
+    - rvm: "2.0.0"
+      gemfile: Gemfile
