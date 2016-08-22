@@ -13,12 +13,12 @@ module Acts
           attr_readonly self.acts_as_permalink_config.to
         end
 
+        allow_blank = self.acts_as_permalink_config.allow_blank
         if self.acts_as_permalink_config.scope
-          validates self.acts_as_permalink_config.to, uniqueness: {scope: self.acts_as_permalink_config.scope}
+          validates self.acts_as_permalink_config.to, uniqueness: {scope: self.acts_as_permalink_config.scope, allow_blank: allow_blank}
         else
-          validates self.acts_as_permalink_config.to, uniqueness: true
+          validates self.acts_as_permalink_config.to, uniqueness: {allow_blank: allow_blank}
         end
-
 
         include Acts::Permalink::InstanceMethods
       end
@@ -38,6 +38,7 @@ module Acts
         config = self.class.base_class.acts_as_permalink_config
 
         text = self.public_send(config.from)
+        return nil if text.blank? && config.allow_blank
         text = [self.class.base_class.to_s, rand(10000)].join(config.separator) if text.blank?
         text = Acts::Permalink::Conversion.convert(text, separator: config.separator, max_length: config.max_length)
 

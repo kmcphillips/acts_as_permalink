@@ -10,6 +10,7 @@ describe Acts::Permalink::Config do
     expect(config.max_length).to eq(60)
     expect(config.scope).to be_nil
     expect(config.allow_update).to be_falsy
+    expect(config.allow_blank).to be_falsy
   end
 
   it "allows the underscore property" do
