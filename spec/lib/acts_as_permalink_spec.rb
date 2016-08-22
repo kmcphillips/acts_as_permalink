@@ -83,6 +83,23 @@ describe Acts::Permalink do
 
   end
 
+  describe "column that allows blank" do
+    class BlankThing < ActiveRecord::Base
+      acts_as_permalink max_length: 100, allow_blank: true
+    end
+
+    it "allows multiple blank titles" do
+      expect(BlankThing.create!(title: "").permalink).to be_nil
+      expect(BlankThing.create!(title: "").permalink).to be_nil
+    end
+
+    it "provides permalink" do
+      expect(BlankThing.create!(title: "").permalink).to be_nil
+      expect(BlankThing.create!(title: "My New Thing").permalink).to eq("my-new-think")
+    end
+
+  end
+
   describe "single table inheritance" do
     class Thing < ActiveRecord::Base
       acts_as_permalink
