@@ -8,7 +8,10 @@ rvm:
 gemfile:
   - Gemfile
   - gemfiles/rails-4.2.gemfile
+  - gemfiles/rails-5.0.gemfile
 matrix:
   exclude:
     - rvm: "2.0.0"
       gemfile: Gemfile
+    - rvm: "2.0.0"
+      gemfile: gemfiles/rails-5.0.gemfile
